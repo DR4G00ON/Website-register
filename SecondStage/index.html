@@ -1,0 +1,352 @@
+<?php
+    include('../Server/config.php');
+    if($_POST){
+        if(isset($_POST['btn-next'])){
+            if(empty($_POST['input-email']) || empty($_POST['input-password'])){
+                $_SESSION['campo-vazio'] = true;
+            }
+            else{
+                echo 'Check';
+            }
+        }
+    }
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    box-sizing: border-box;
+    font-family: 'inherit', Arial, Helvetica, sans-serif;
+}
+body{
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+.top-bar{
+    width: 100vw;
+    background: #58A4E8;
+    height: 4rem;
+    font-weight: bold;
+    display: flex;
+    letter-spacing: 2px;
+    font-size: 20px;
+    word-spacing: 10px;
+    justify-content: center;
+    align-items: center;
+    color: #165082;
+    border-bottom-left-radius: 4rem;
+    border-bottom-right-radius: 4rem;
+}
+.container{
+    height: calc(100% - 9rem);
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.text{
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    margin-top: 2rem;
+}
+.area-details{
+    width: 100vw;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.area-details .information-stage{
+    width: 80vw;
+    margin-top: 1rem;
+    padding: 0.3rem;
+    position: relative;
+    justify-content: space-around;
+    display: flex;
+}
+.loading{
+    visibility: hidden;
+    position: absolute;
+    height: 4rem;
+    width: 4rem; 
+    position: fixed;
+    left: 50%;
+    transition: .5s;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+.loading img{
+    width: 100%;
+    height: 100%;
+    animation: animationLoading infinite 2s;
+}
+.blackout{
+    visibility: hidden;
+    height: 100vh;
+    transition: .5s;
+    opacity: 0;
+    width: 100vw;
+    background: white;
+    position: absolute;
+    z-index: 500;
+}
+@keyframes animationLoading{
+    0%{
+        rotate: 0deg;
+    }
+    50%{
+        rotate: -120deg;
+    }
+    100%{
+        rotate: -360deg;
+    }
+}
+.stage{
+    background: white;
+    border: 5px solid #4b5a85;
+    width: 2rem;
+    display: grid;
+    z-index: 400;
+    font-size: 10px;
+    border-radius: 50%;
+    place-items: center;
+    height: 2rem;
+}
+.stage:nth-child(2){
+    background: #4b5a85;
+    color: white;
+}
+.line-detail{
+
+    position: absolute;
+    height: 0.25rem;
+    width: 60vw;
+    border-radius: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #4b5a85;
+}
+.inputs-area{
+    margin-top: 4rem;
+    width: 100vw;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    height: 6rem;
+}
+.areaInput{
+    position: relative;
+    height: 50%;
+    width: 80%;
+}
+.text h1{
+    font-weight: 100;
+    font-size: 30px;
+}
+.areaInput:nth-child(2){
+    display: flex;
+    align-items: end;
+}
+.input{
+    width: 80vw;
+    height: 2rem;   
+    outline: none;
+    border: none;
+    border-radius: 0.5rem;
+    border: 1px solid rgb(37, 37, 37);
+    padding: 0.5rem;
+    letter-spacing: 0.1rem;
+}
+.icon-eyes{
+    display: flex;
+}
+.icon-eyes img{
+    position: absolute;
+    width: 1.5rem;
+    top: 1.25rem;
+    right: 5px;
+    cursor: pointer;
+}
+.area-btn-next{
+    width: 100vw;
+    height: 3rem;
+    margin-top: 0.5rem;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+}
+.btn-next{
+    width: 80%;
+    display: flex;
+    height: 100%;
+}
+.btn-next input:nth-child(1){
+    border-bottom-left-radius: 1rem;
+}
+.btn-next input:nth-child(2){
+    background:#3280c5;
+    border-bottom-right-radius: 1rem;
+}
+.btn-next input{
+    margin-left: 0.1rem;
+    margin-right: 0.1rem;
+    cursor: pointer;
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+    letter-spacing: 3px;
+    width: 100%;
+    transition: .5s;    
+    height: 100%;
+    border: none;
+    background: #58A4E8;
+}
+.btn-next:focus{
+    scale: 0.9;
+}
+.rodape{
+    height: 5rem;
+    width: 100vw;
+    position: absolute;
+    bottom: 0;
+    background: #58A4E8;
+    z-index: -10;
+}
+.drone{
+    height: 3rem;
+    position: absolute;
+    width: 100vw;
+    background: white;
+    bottom: 5rem;
+    z-index: 100;
+    border-bottom-right-radius: 4rem;
+    border-bottom-left-radius: 4rem;
+}
+.drtwo{
+    z-index: 10;
+    height: 3rem;
+    width: 100vw;
+    background: #58A4E8;
+    position: absolute;
+    right: 0;
+    bottom: 5rem;
+}
+
+@media (max-width: 600px){ 
+    .inputs-area{
+        margin-top: 2rem;
+    }
+}
+    </style>
+</head>
+<body>
+    <form method="post">
+        <header class="top-bar">
+            <h2>Teacher  notes</h2>
+    </header><!-- top-bar --->
+    <div class="container">
+        <div class="item-all">
+        <div class="text"><h1>Informe os seguintes dados para prosseguir</h1></div>
+        <div class="area-details">
+            <div class="information-stage">
+                <div class="first-stage stage">
+                    <h2>1</h2>
+                </div><!-- first-stage -------------->
+                <div class="second-stage stage">
+                    <h2>2</h2>
+                </div><!-- second-stage ------------->
+                <div class="third-stage stage">
+                    <h2>3</h2>
+                </div><!-- third-stage -------------->
+                <div class="line-detail"></div>
+            </div><!-- information-stage ------------>
+        </div><!-- area-details --------------------->
+        <div class="inputs-area">
+            <div class="email-input areaInput">
+                <input type="email" placeholder="Nome de usuário:" name="input-email" class="input">
+            </div><!-- email-input ------------------>
+            <div class="password-input areaInput">
+                <div class="icon-eyes">
+                    <img src="./Assets/Icons/eyesOpen.png" name="input=password" class="eyesOpen">
+                </div>
+                <input type="password" placeholder="Senha:" class="input passwordInput">
+            </div><!-- password-input --------------->
+        </div><!-- inputs-area ---------------------->
+        <div class="area-btn-next">
+            <div class="btn-next">
+                <input type="button" value="Prosseguir" class="btn-next-single"/>
+                <input type="button" value="Voltar" class="btn-back-single"/>
+            </div>
+        </div><!-- btn-text ------------------------->
+    </div><!-- item-all ------------------------->
+    <div class="loading"><img src="./Assets/Icons/icon_loadingCircle.png"></div>
+    <div class="blackout"></div>
+    </div><!-- container ---------------------------->
+    <div class="drone"></div>
+    <div class="drtwo"></div>
+    <header class="rodape"></header><!-- rodape ----->
+    </form>
+</body>
+<script>
+    document.querySelector('.eyesOpen').addEventListener('mousedown', function(){
+    document.querySelector('.passwordInput').type = 'text'
+})
+document.querySelector('.eyesOpen').addEventListener('mouseup', function(){
+    document.querySelector('.passwordInput').type = 'password'
+})
+document.querySelector('.eyesOpen').addEventListener('mousemove', function(){
+    document.querySelector('.passwordInput').type = 'password'
+})
+
+document.querySelector('.btn-next-single').addEventListener('click', function(event){btnFNext(event)})
+document.querySelector('.btn-next-single').addEventListener('touchstart', function(event){btnFNext(event)})
+document.querySelector('.btn-back-single').addEventListener('click', function(event){btnFBack(event)})
+document.querySelector('.btn-back-single').addEventListener('touchstart', function(event){btnFBack(event)})
+
+function btnFNext(event){
+    if(event.type === 'touchstart')event.preventDefault()
+    document.querySelector('.loading').style.zIndex = 1000
+    document.querySelector('.blackout').style.visibility = 'visible'
+    document.querySelector('.blackout').style.opacity = 0.9
+    document.querySelector('.loading').style.visibility = 'visible'
+    document.querySelector('.item-all').style.opacity = 0.9
+    console.log('check 1');
+    setTimeout(function(){
+        document.querySelector('body').style.opacity = 1
+        document.querySelector('.blackout').style.visibility = 'hidden'
+        document.querySelector('.loading').style.visibility = 'hidden'
+        document.querySelector('.item-all').style.opacity = 1
+        console.log('check 2');
+        window.location.href = "../ThirdStage/index.html"
+    }, 3000)
+}
+function btnFBack(event){
+    if(event.type === 'touchstart')event.preventDefault()
+    document.querySelector('.loading').style.zIndex = 1000
+    document.querySelector('.blackout').style.visibility = 'visible'
+    document.querySelector('.blackout').style.opacity = 0.9
+    document.querySelector('.loading').style.visibility = 'visible'
+    document.querySelector('.item-all').style.opacity = 0.9
+    console.log('check 1');
+    setTimeout(function(){
+        document.querySelector('body').style.opacity = 1
+        document.querySelector('.blackout').style.visibility = 'hidden'
+        document.querySelector('.loading').style.visibility = 'hidden'
+        document.querySelector('.item-all').style.opacity = 1
+        console.log('check 2');
+        window.location.href = "../FirstStage/index.html"
+    }, 3000)
+}
+</script>
+</html>
